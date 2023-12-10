@@ -273,7 +273,7 @@ section h1{
     margin-bottom: 30px;
 }
 
-.container-halteres {
+.container-sweats {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(220px, auto));
     align-items: center;
@@ -283,7 +283,7 @@ section h1{
     padding-top: 2rem;
 }
 
-.container-discos {
+.container-calcas {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(220px, auto));
     align-items: center;
@@ -304,13 +304,14 @@ section h1{
 }
 
 .box {
-    background-color: #f6f6f6;
+    background-color: #f1f1f1;
     padding: 0px 20px 10px 20px;
     box-shadow: 5px 45px 56px rgba(0, 0, 0, 0.12);
     border-radius: 10px;
     position: relative;
     transition: all .35s ease;
     scale: 1;
+    max-width: 350px;
 }
 
 .box:hover {

@@ -26,7 +26,7 @@ function verificarPassword() {
         }
 
         if ($utilizador == "admin" && $mail == "admin@gmail.com" && $pass1 == "admin123" && $pass2 == "admin123") {
-            $_SESSION['Admin'] = true;
+            $_SESSION['admin'] = true;
             header("Location: admin.php");
             exit();
         } else {

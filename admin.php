@@ -1,12 +1,14 @@
 <?php
-session_start();
-
 function inserirProduto() {
 
     if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $newProductName = $_POST['nome'];
         $newProductPrice = $_POST['preco'];
-        $newProductImage = $_POST['imagem'];
+        if ($_POST['imagem']){
+            $newProductImage = 'img/' . $_POST['imagem'];
+        } else {
+            $newProductImage = 'img/default-product-image.png';
+        }
 
         $productList = isset($_SESSION['productList']) ? $_SESSION['productList'] : [];
 
@@ -26,9 +28,9 @@ function inserirProduto() {
 }
 
 function updateCatalogoFile($productList) {
-    $catalogoFile = 'catalogo.php';
+    $productsFile = 'products.php';
 
-    $file = fopen($catalogoFile, 'a');
+    $file = fopen($productsFile, 'w');
 
     if ($file) {
         $content = '<?php' . PHP_EOL;
@@ -39,9 +41,9 @@ function updateCatalogoFile($productList) {
     }
 }
 
+session_start();
 inserirProduto();
 ?>
-
 
 <!DOCTYPE html>
 <html lang="en">

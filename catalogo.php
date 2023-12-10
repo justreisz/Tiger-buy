@@ -1,12 +1,12 @@
 <?php
 
 session_start();
-if (!isset($_SESSION['user'])) {
+if (!isset($_SESSION['user']) && !isset($_SESSION['admin'])) {
     header("Location: erro.php"); 
     exit();
-} 
+}
 
-$productList = isset($_SESSION['productList']) ? $_SESSION['productList'] : [];
+include 'products.php';
 
 ?>
 <!DOCTYPE html>
@@ -16,6 +16,7 @@ $productList = isset($_SESSION['productList']) ? $_SESSION['productList'] : [];
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Catálogo</title>
     <link rel="stylesheet" href="style.css">
+    <script src="index.js"></script>
     <link rel="stylesheet" href="https://unpkg.com/boxicons@latest/css/boxicons.min.css">
 </head>
 <body>
@@ -27,7 +28,7 @@ $productList = isset($_SESSION['productList']) ? $_SESSION['productList'] : [];
             <img src="img/tigerbuy.png" class="topnav-icon">
             <a href="index.html#sobre" target="_parent">Sobre</a>
             <?php
-            if (!isset($_SESSION['user'])) {
+            if (!isset($_SESSION['user']) && !isset($_SESSION['admin'])) {
                 echo '<a href="login.php" target="_parent">Login</a>';
             } else {
                 echo '<a href="logout.php" target="_parent">Logout</a>';
@@ -56,66 +57,66 @@ $productList = isset($_SESSION['productList']) ? $_SESSION['productList'] : [];
     </div>
 
     <section class="loja" id="loja">
-        <h1>Halteres</h1>
-        <div class="container-halteres" id="container-halteres">
+        <h1>Sweats</h1>
+        <div class="container-sweats" id="container-sweats">
             <div class="box">
-                <img class="product-img" src="img/Halteres/2.5kg.jpg">
-                <h4 class="product-title">Haltere 2.5kg</h4>
+                <img class="product-img" src="img/Sweats/verde.jpg ">
+                <h4 class="product-title">Sweat Verde</h4>
                 <h5 class="product-price">19.99$</h5>
                 <i class='bx bx-shopping-bag add-cart'></i>
             </div>
 
             <div class="box">
-                <img class="product-img" src="img/Halteres/5kg.jpg">
-                <h4 class="product-title">Haltere 5kg</h4>
-                <h5 class="product-price">34.99$</h5>
+                <img class="product-img" src="img/Sweats/azul.jpg">
+                <h4 class="product-title">Sweat Azul</h4>
+                <h5 class="product-price">21.99$</h5>
                 <i class='bx bx-shopping-bag add-cart'></i>
             </div>
 
             <div class="box">
-                <img class="product-img" src="img/Halteres/8kg.jpg">
-                <h4 class="product-title">Haltere 8kg</h4>
-                <h5 class="product-price">29.99$</h5>
+                <img class="product-img" src="img/Sweats/branco.jpg">
+                <h4 class="product-title">Sweat Branca</h4>
+                <h5 class="product-price">19.99$</h5>
                 <i class='bx bx-shopping-bag add-cart'></i>
             </div>
 
             <div class="box">
-                <img class="product-img" src="img/Halteres/15kg.jpg">
-                <h4 class="product-title">Haltere 15kg</h4>
-                <h5 class="product-price">115.99$</h5>
+                <img class="product-img" src="img/Sweats/castanho.jpg">
+                <h4 class="product-title">Sweat Castanha</h4>
+                <h5 class="product-price">23.99$</h5>
                 <i class='bx bx-shopping-bag add-cart'></i>            
             </div>
 
         </div>
 
-        <h1 style="margin-top: 80px;">Discos</h1>
-        <div class="container-discos" id="container-discos">
+        <h1 style="margin-top: 120px;">Calças</h1>
+        <div class="container-calcas" id="container-calcas">
         
             <div class="box">
-                <img class="product-img" src="img/Discos/5kg.jpg">
-                <h4 class="product-title">Disco 5kg</h4>
+                <img class="product-img" src="img/calcas/ganga.jpg">
+                <h4 class="product-title">Calças azuis baggy</h4>
                 <h5 class="product-price">29.99$</h5>
                 <i class='bx bx-shopping-bag add-cart'></i>
             </div>
         
             <div class="box">
-                <img class="product-img" src="img/Discos/10kg.jpg">
-                <h4 class="product-title">Disco 10kg</h4>
-                <h5 class="product-price">59.99$</h5>
+                <img class="product-img" src="img/calcas/branca.jpg">
+                <h4 class="product-title">Calças branca baggy</h4>
+                <h5 class="product-price">31.99$</h5>
                 <i class='bx bx-shopping-bag add-cart'></i>
             </div>
         
             <div class="box">
-                <img class="product-img" src="img/Discos/15kg.jpg">
-                <h4 class="product-title">Disco 15kg</h4>
-                <h5 class="product-price">69.99$</h5>
+                <img class="product-img" src="img/calcas/preto.jpg">
+                <h4 class="product-title">Calças pretas baggy</h4>
+                <h5 class="product-price">27.99$</h5>
                 <i class='bx bx-shopping-bag add-cart'></i>
             </div>
         
             <div class="box">
-                <img class="product-img" src="img/Discos/20kg.png">
-                <h4 class="product-title">Disco 20kg</h4>
-                <h5 class="product-price">99.99$</h5>
+                <img class="product-img" src="img/calcas/castanha.png">
+                <h4 class="product-title">Calças castanha baggy</h4>
+                <h5 class="product-price">29.99$</h5>
                 <i class='bx bx-shopping-bag add-cart'></i>
             </div>
         
@@ -123,102 +124,19 @@ $productList = isset($_SESSION['productList']) ? $_SESSION['productList'] : [];
 
         <h1 style="margin-top: 80px;">Novos produtos</h1>
         <div class="newItems-content">
-        <?php
-            foreach ($productList as $product) {
-                echo '<div class="box">';
-                echo '<img class="product-img" src="' . $product['image'] . '">';
-                echo '<h4 class="product-title">' . $product['name'] . '</h4>';
-                echo '<h5 class="product-price">' . $product['price'] . '</h5>';
-                echo '<i class=\'bx bx-shopping-bag add-cart\'></i>';
-                echo '</div>';
-            }
-        ?>
+          <?php
+              if (isset($productList) && is_array($productList)) {
+                  foreach ($productList as $product) {
+                      echo '<div class="box">';
+                      echo '<img class="product-img" src="' . $product['image'] . '">';
+                      echo '<h4 class="product-title">' . $product['name'] . '</h4>';
+                      echo '<h5 class="product-price">' . $product['price'] . '</h5>';
+                      echo '<i class=\'bx bx-shopping-bag add-cart\'></i>';
+                      echo '</div>';
+                  }
+              } else {
+                  echo '<p>Sem produtos disponiveis.</p>';
+              }
+          ?>
         </div>
 </body>
-
-<?php
-$productList = array (
-  0 => 
-  array (
-    'name' => 'Casaco',
-    'price' => '25',
-    'image' => 'sweatHome.webp',
-  ),
-);
-?>
-<?php
-$productList = array (
-  0 => 
-  array (
-    'name' => 'casaco',
-    'price' => '25',
-    'image' => 'sweatHome.webp',
-  ),
-);
-?>
-<?php
-$productList = array (
-  0 => 
-  array (
-    'name' => 'casaco',
-    'price' => '25',
-    'image' => 'sweatHome.webp',
-  ),
-  1 => 
-  array (
-    'name' => 'Ya',
-    'price' => '20',
-    'image' => 'sweatHome.webp',
-  ),
-);
-?>
-<?php
-$productList = array (
-  0 => 
-  array (
-    'name' => 'casaco',
-    'price' => '25',
-    'image' => 'sweatHome.webp',
-  ),
-  1 => 
-  array (
-    'name' => 'Ya',
-    'price' => '20',
-    'image' => 'sweatHome.webp',
-  ),
-  2 => 
-  array (
-    'name' => 'Ya',
-    'price' => '20',
-    'image' => 'sweatHome.webp',
-  ),
-);
-?>
-<?php
-$productList = array (
-  0 => 
-  array (
-    'name' => 'casaco',
-    'price' => '25',
-    'image' => 'sweatHome.webp',
-  ),
-  1 => 
-  array (
-    'name' => 'Ya',
-    'price' => '20',
-    'image' => 'sweatHome.webp',
-  ),
-  2 => 
-  array (
-    'name' => 'Ya',
-    'price' => '20',
-    'image' => 'sweatHome.webp',
-  ),
-  3 => 
-  array (
-    'name' => 'Ya',
-    'price' => '20',
-    'image' => 'sweatHome.webp',
-  ),
-);
-?>

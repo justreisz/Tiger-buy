@@ -25,7 +25,14 @@ if (isset($_POST['logout'])) {
             <form name="logoutForm" class="formLogin" method="post" action="">
                 <br><br>
                 <h1>LOGOUT</h1>
-                <p>Tu estás logado como : <?php echo $_SESSION['user']; ?></p>
+                <?php
+                   if(isset($_SESSION['user'])){
+                        $user = $_SESSION['user'];
+                   } elseif (isset($_SESSION['admin'])){
+                        $user = 'admin';
+                   }
+                ?>
+                <p>Tu estás logado como : <?php echo $user ?></p>
                 <input type="submit" name="logout" value="Logout" class="btn">
             </form>
         </div>
