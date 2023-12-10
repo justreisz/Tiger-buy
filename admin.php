@@ -3,7 +3,7 @@ function inserirProduto() {
 
     if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $newProductName = $_POST['nome'];
-        $newProductPrice = $_POST['preco'];
+        $newProductPrice = $_POST['preco'] . " $";
         if ($_POST['imagem']){
             $newProductImage = 'img/' . $_POST['imagem'];
         } else {

@@ -3,9 +3,6 @@ document.addEventListener('DOMContentLoaded', function () {
     let cart = document.querySelector('.cart-menu');
     let closeCart = document.querySelector('#close-cart');
 
-    // Rest of your code...
-
-    // Event listeners
     cartIcon.onclick = () => {
         cart.classList.add("active");
     }
