@@ -24,6 +24,32 @@ include 'products.php';
     <link rel="stylesheet" href="style.css">
     <script src="index.js"></script>
     <link rel="stylesheet" href="https://unpkg.com/boxicons@latest/css/boxicons.min.css">
+    <style>
+        /* Add your styling for the modal */
+        .discount-popup {
+            display: none;
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            padding: 20px;
+            background-color: #fff;
+            border: 1px solid #ccc;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            z-index: 1000;
+        }
+
+        .overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            z-index: 999;
+        }
+    </style>
 </head>
 <body>
     
@@ -134,6 +160,34 @@ include 'products.php';
                 echo "Desconto ativo";
             }
         ?>
+        <div class="overlay" id="overlay"></div>
+        <div class="discount-popup" id="discount-popup">
+            <p>Special Discount Available!</p>
+            <button onclick="hideDiscountPopup()">Close</button>
+        </div>
+
+        <script>
+                    // JavaScript functions to show/hide the discount popup
+            function showDiscountPopup() {
+                document.getElementById('overlay').style.display = 'block';
+                document.getElementById('discount-popup').style.display = 'block';
+            }
+
+            function hideDiscountPopup() {
+                document.getElementById('overlay').style.display = 'none';
+                document.getElementById('discount-popup').style.display = 'none';
+            }
+
+            // Use window.onload to ensure the DOM is fully loaded before executing the code
+            window.onload = function() {
+                <?php
+                if ($descontoAtivo) {
+                    // Display a button to trigger the discount popup
+                    echo 'showDiscountPopup();';
+                }
+                ?>
+            };
+        </script>
         <div class="newItems-content">
           <?php
               if (isset($productList) && is_array($productList)) {

@@ -580,10 +580,10 @@ section h1{
 
 .painel_admin h2{
     padding: 10px;
-    text-align: center;
     font-size: 19px;
     color: white;
     transition: 0.6s;
+    text-align: center;
 }
 
 .painel_admin h2:hover{
@@ -636,6 +636,16 @@ section h1{
     margin-top: 10px;
     font-size: 14px;
     color: red;
+    text-align: center;
+}
+
+.eliminar_produto{
+    margin-left: 10px;
+    margin-top: 10px;
+}
+
+.eliminar_produto input {
+    border-radius: 10px;
     text-align: center;
 }
 
