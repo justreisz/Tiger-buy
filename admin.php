@@ -3,21 +3,27 @@ function inserirProduto() {
 
     if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $newProductName = $_POST['nome'];
-        $newProductPrice = $_POST['preco'] . " $";
+        $newProductPrice = $_POST['preco'] . "$";
         if ($_POST['imagem']){
             $newProductImage = 'img/' . $_POST['imagem'];
         } else {
             $newProductImage = 'img/default-product-image.png';
         }
+        
+        //se não existir a session produtos, ele vai buscar ao ficheiro os produtos
+        if (!isset($_SESSION['productList'])) {
+            include 'products.php'; 
+            $_SESSION['productList'] = $productList;
+        }
 
-        $productList = isset($_SESSION['productList']) ? $_SESSION['productList'] : [];
 
         $newProduct = [
             'name' => $newProductName,
             'price' => $newProductPrice,
             'image' => $newProductImage,
         ];
-
+        
+        $productList = $_SESSION['productList'];
         $productList[] = $newProduct;
 
         $_SESSION['productList'] = $productList;

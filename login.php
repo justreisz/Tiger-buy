@@ -31,6 +31,7 @@ function verificarPassword() {
             exit();
         } else {
             $_SESSION['user'] = $utilizador;
+            setcookie('desconto', '10', time() + 25);
             header("Location: catalogo.php");
             exit();
         }

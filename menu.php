@@ -14,13 +14,15 @@
             <a href="catalogo.php" target="_parent">Catálogo</a>
             <img src="img/tigerbuy.png" class="topnav-icon">
             <a href="index.html#sobre" target="_parent">Sobre</a>
-            
             <?php
             session_start();
             if (!isset($_SESSION['user']) && !isset($_SESSION['admin'])) {
                     echo '<a href="login.php" target="_parent">Login</a>';
             } else {
                 echo '<a href="logout.php" target="_parent">Logout</a>';
+            }
+            if (isset($_SESSION['admin'])){
+                echo '<a href="admin.php" target="_parent">Admin</a>';
             }
             ?>
         </div>

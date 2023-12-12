@@ -6,6 +6,12 @@ if (!isset($_SESSION['user']) && !isset($_SESSION['admin'])) {
     exit();
 }
 
+$descontoAtivo = isset($_COOKIE['desconto']);
+function aplicarDesconto($preco) {
+    return $preco * 0.9; 
+}
+
+
 include 'products.php';
 
 ?>
@@ -123,6 +129,11 @@ include 'products.php';
         </div>
 
         <h1 style="margin-top: 80px;">Novos produtos</h1>
+        <?php
+            if ($descontoAtivo){
+                echo "Desconto ativo";
+            }
+        ?>
         <div class="newItems-content">
           <?php
               if (isset($productList) && is_array($productList)) {
@@ -130,7 +141,12 @@ include 'products.php';
                       echo '<div class="box">';
                       echo '<img class="product-img" src="' . $product['image'] . '">';
                       echo '<h4 class="product-title">' . $product['name'] . '</h4>';
-                      echo '<h5 class="product-price">' . $product['price'] . '</h5>';
+                      if ($descontoAtivo){
+                        $precoComDesconto = aplicarDesconto($product['price']);
+                        echo '<h5 class="product-price">$' . number_format($precoComDesconto, 2) . '</h5>';
+                      }else {
+                        echo '<h5 class="product-price">$' . $product['price'] . '</h5>';
+                      }
                       echo '<i class=\'bx bx-shopping-bag add-cart\'></i>';
                       echo '</div>';
                   }

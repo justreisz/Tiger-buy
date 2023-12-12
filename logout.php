@@ -2,10 +2,11 @@
 session_start();
 
 if (isset($_POST['logout'])) {
-    session_destroy();
+    session_destroy(); 
     header("Location: login.php");
     exit();
-}
+} 
+
 ?>
 
 <!DOCTYPE html>
