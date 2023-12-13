@@ -4,7 +4,7 @@ function inserirProduto() {
     if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
         $newProductName = isset($_POST['nome']) ? $_POST['nome'] : '';
-        $newProductPrice = isset($_POST['preco']) ? $_POST['preco'] : '';
+        $newProductPrice = isset($_POST['preco']) ? (int)$_POST['preco'] : 0;
 
         $newProductImage = '';
         if (isset($_FILES['imagem']) && isset($_FILES['imagem']['name'])) {
@@ -17,33 +17,41 @@ function inserirProduto() {
 
             move_uploaded_file($_FILES['imagem']['tmp_name'], $newProductImage);
         }
+        if (!empty($newProductName) && $newProductPrice > 0 && $newProductImage !== '') {
 
-        //se não existir a session produtos, ele vai buscar ao ficheiro os produtos
-        if (!isset($_SESSION['productList'])) {
-            include 'products.php'; 
+            $productsFilePath = 'products.php';
+            if (file_exists($productsFilePath)) {
+                include $productsFilePath;
+                $_SESSION['productList'] = $productList;
+            } else {
+                $_SESSION['productList'] = [];
+            }
+
+            $newProduct = [
+                'name' => $newProductName,
+                'price' => $newProductPrice,
+                'image' => $newProductImage,
+            ];
+
+            $productList = $_SESSION['productList'];
+            $productList[] = $newProduct;
+
             $_SESSION['productList'] = $productList;
+            updateCatalogoFile($productList);
         }
-
-
-        $newProduct = [
-            'name' => $newProductName,
-            'price' => $newProductPrice,
-            'image' => $newProductImage,
-        ];
-        
-        $productList = $_SESSION['productList'];
-        $productList[] = $newProduct;
-
-        $_SESSION['productList'] = $productList;
-        updateCatalogoFile($productList);
-        
     } 
 }
 
 function updateCatalogoFile($productList) {
-    if ($productList == []){
-        return false;
+    if (empty($productList)){
+        #Se não existirem produtos, vai eliminar o ficheiro products.php
+        $productsFile = 'products.php';
+        if (file_exists($productsFile)) {
+            unlink($productsFile);
+        }
+        return;
     }
+
     $productsFile = 'products.php';
 
     $file = fopen($productsFile, 'w');
@@ -57,13 +65,13 @@ function updateCatalogoFile($productList) {
     }
 }
 
+
 function deleteAllProducts() {
-    // Check if the session variable exists
     if (isset($_SESSION['productList'])) {
-        // Clear the product list
+        // Eliminar os produtos todos
         $_SESSION['productList'] = [];
 
-        // Update the products file
+        // Atualizar o ficheiro dos produtos
         updateCatalogoFile([]);
     }
 }
@@ -73,7 +81,6 @@ session_start();
 
 // Check if the "delete all" form is submitted
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['delete_all'])) {
-    // Call the function to delete all products
     deleteAllProducts();
 }
 
