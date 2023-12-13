@@ -7,6 +7,7 @@ if (!isset($_SESSION['user']) && !isset($_SESSION['admin'])) {
 }
 
 $descontoAtivo = isset($_COOKIE['desconto']);
+echo (isset($_COOKIE['desconto']));
 function aplicarDesconto($preco) {
     return $preco * 0.9; 
 }
