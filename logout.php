@@ -3,6 +3,7 @@ session_start();
 
 if (isset($_POST['logout'])) {
     session_destroy(); 
+    setcookie('desconto', '', time() - 3600, '/');
     header("Location: login.php");
     exit();
 } 

@@ -27,11 +27,12 @@ function verificarPassword() {
 
         if ($utilizador == "admin" && $mail == "admin@gmail.com" && $pass1 == "admin123" && $pass2 == "admin123") {
             $_SESSION['admin'] = true;
+            setcookie('desconto', '10', time() - 3600);
             header("Location: admin.php");
             exit();
         } else {
             $_SESSION['user'] = $utilizador;
-            setcookie('desconto', '10', time() + 250);
+            setcookie('desconto', '10', time() + 120);
             header("Location: catalogo.php");
             exit();
         }

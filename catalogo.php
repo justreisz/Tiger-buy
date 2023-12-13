@@ -11,8 +11,10 @@ function aplicarDesconto($preco) {
     return $preco * 0.9; 
 }
 
-
-include 'products.php';
+$productsFilePath = 'products.php';
+if (file_exists($productsFilePath)) {
+    include 'products.php';
+}
 
 ?>
 <!DOCTYPE html>
@@ -24,32 +26,6 @@ include 'products.php';
     <link rel="stylesheet" href="style.css">
     <script src="index.js"></script>
     <link rel="stylesheet" href="https://unpkg.com/boxicons@latest/css/boxicons.min.css">
-    <style>
-        /* Add your styling for the modal */
-        .discount-popup {
-            display: none;
-            position: fixed;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            padding: 20px;
-            background-color: #fff;
-            border: 1px solid #ccc;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-            z-index: 1000;
-        }
-
-        .overlay {
-            display: none;
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background-color: rgba(0, 0, 0, 0.5);
-            z-index: 999;
-        }
-    </style>
 </head>
 <body>
     
@@ -153,21 +129,28 @@ include 'products.php';
             </div>
         
         </div>
-
-        <h1 style="margin-top: 80px;">Novos produtos</h1>
+        
         <?php
+            $descontoAtivo = isset($_COOKIE['desconto']);
             if ($descontoAtivo){
                 echo "Desconto ativo";
+                echo '<h1 style="margin-top: 80px;">Novos produtos (DESCONTO ATIVO) </h1>';
+            }
+            else {
+                echo '<h1 style="margin-top: 80px;">Novos produtos </h1>';
             }
         ?>
         <div class="overlay" id="overlay"></div>
         <div class="discount-popup" id="discount-popup">
-            <p>Special Discount Available!</p>
-            <button onclick="hideDiscountPopup()">Close</button>
+        <p> Desconto nos novos produtos para novos utilizadores disponivel (2 minutos depois do log in)! </p>
+        <br>
+        <center>
+            <button onclick="hideDiscountPopup()">Fechar</button>
+        </center>
         </div>
 
         <script>
-                    // JavaScript functions to show/hide the discount popup
+            /* Mostrar o pop up a informar o desconto*/
             function showDiscountPopup() {
                 document.getElementById('overlay').style.display = 'block';
                 document.getElementById('discount-popup').style.display = 'block';
@@ -181,32 +164,35 @@ include 'products.php';
             // Use window.onload to ensure the DOM is fully loaded before executing the code
             window.onload = function() {
                 <?php
-                if ($descontoAtivo) {
-                    // Display a button to trigger the discount popup
-                    echo 'showDiscountPopup();';
-                }
+                    $descontoAtivo = isset($_COOKIE['desconto']);
+                    if ($descontoAtivo) {
+                        echo 'showDiscountPopup();';
+                    }
                 ?>
             };
         </script>
         <div class="newItems-content">
           <?php
-              if (isset($productList) && is_array($productList)) {
-                  foreach ($productList as $product) {
-                      echo '<div class="box">';
-                      echo '<img class="product-img" src="' . $product['image'] . '">';
-                      echo '<h4 class="product-title">' . $product['name'] . '</h4>';
-                      if ($descontoAtivo){
-                        $precoComDesconto = aplicarDesconto($product['price']);
-                        echo '<h5 class="product-price">$' . number_format($precoComDesconto, 2) . '</h5>';
-                      }else {
-                        echo '<h5 class="product-price">$' . $product['price'] . '</h5>';
-                      }
-                      echo '<i class=\'bx bx-shopping-bag add-cart\'></i>';
-                      echo '</div>';
-                  }
-              } else {
-                  echo '<p>Sem produtos disponiveis.</p>';
-              }
+                if (isset($productList) && is_array($productList) && !empty($productList)) {
+                    foreach ($productList as $product) {
+                    
+                        echo '<div class="box">';
+                        echo '<img class="product-img" src="' . $product['image'] . '">';
+                        echo '<h4 class="product-title">' . $product['name'] . '</h4>';
+                        $descontoAtivo = isset($_COOKIE['desconto']);
+                        if ($descontoAtivo){
+                            $precoComDesconto = aplicarDesconto($product['price']);
+                            echo '<h5 class="product-price">$' . number_format($precoComDesconto, 2) . '</h5>' ;
+                        }else {
+                            echo '<h5 class="product-price">$' . $product['price'] . '</h5>'  ;
+                        }
+                        echo '<i class=\'bx bx-shopping-bag add-cart\'></i>';
+                        echo '</div>';
+                    }
+                }  
+                else {
+                    echo '<p>Sem produtos disponiveis.</p>';
+                }
           ?>
         </div>
 </body>
