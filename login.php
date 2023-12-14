@@ -10,7 +10,8 @@ function verificarPassword() {
         $pass2 = $_POST['pass2'];
         $utilizador = $_POST['user'];
         $mail = $_POST['mail'];
-
+        
+        //Validações no login
         if (empty($utilizador) || empty($pass1) || empty($mail) || empty($pass2)) {
             $error_message = "*Preencha todos os campos";
             return false;
@@ -25,6 +26,7 @@ function verificarPassword() {
             return false;
         }
 
+        //Entrar como admin
         if ($utilizador == "admin" && $mail == "admin@gmail.com" && $pass1 == "admin123" && $pass2 == "admin123") {
             $_SESSION['admin'] = true;
             setcookie('desconto', '10', time() - 3600);

@@ -7,7 +7,6 @@ if (!isset($_SESSION['user']) && !isset($_SESSION['admin'])) {
 }
 
 $descontoAtivo = isset($_COOKIE['desconto']);
-echo (isset($_COOKIE['desconto']));
 function aplicarDesconto($preco) {
     return $preco * 0.9; 
 }
@@ -134,7 +133,6 @@ if (file_exists($productsFilePath)) {
         <?php
             $descontoAtivo = isset($_COOKIE['desconto']);
             if ($descontoAtivo){
-                echo "Desconto ativo";
                 echo '<h1 style="margin-top: 80px;">Novos produtos (DESCONTO ATIVO) </h1>';
             }
             else {
@@ -151,7 +149,7 @@ if (file_exists($productsFilePath)) {
         </div>
 
         <script>
-            /* Mostrar o pop up a informar o desconto*/
+            // Mostrar o pop up a informar o desconto
             function showDiscountPopup() {
                 document.getElementById('overlay').style.display = 'block';
                 document.getElementById('discount-popup').style.display = 'block';
@@ -162,7 +160,7 @@ if (file_exists($productsFilePath)) {
                 document.getElementById('discount-popup').style.display = 'none';
             }
 
-            // Use window.onload to ensure the DOM is fully loaded before executing the code
+            // Quando a pagina for aberta, ele vai executar o código abaixo
             window.onload = function() {
                 <?php
                     $descontoAtivo = isset($_COOKIE['desconto']);

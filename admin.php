@@ -11,7 +11,7 @@ function inserirProduto() {
         $newProductName = isset($_POST['nome']) ? $_POST['nome'] : '';
         $newProductPrice = isset($_POST['preco']) ? (int)$_POST['preco'] : 0;
 
-        // Set default image path
+        // Meter uma imagem como default, para se nenhuma for introduzida
         $defaultImage = 'img/default-product-image.png';
         $newProductImage = $defaultImage;
 
@@ -28,7 +28,8 @@ function inserirProduto() {
 
         if (!empty($newProductName) && $newProductPrice > 0) {
             $productsFilePath = 'products.php';
-
+            
+            //Verificar se o ficheiro products.php existe
             if (file_exists($productsFilePath)) {
                 include $productsFilePath;
                 $_SESSION['productList'] = $productList;
